@@ -126,7 +126,7 @@ export default function DashboardPage() {
             <DialogTrigger asChild>
               <Button onClick={() => handleOpenDialog()}>Add New Project</Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>{editingProject ? 'Edit Project' : 'Create New Project'}</DialogTitle>
                 <DialogDescription>
@@ -166,9 +166,9 @@ export default function DashboardPage() {
                   <FormItem>
                     <FormLabel>Add Members</FormLabel>
                     <div className="flex gap-2 items-start">
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <MultiSelect values={selectedMembers} onValuesChange={setSelectedMembers}>
-                          <MultiSelectTrigger className="w-full">
+                          <MultiSelectTrigger>
                             <MultiSelectValue placeholder="Select members..." />
                           </MultiSelectTrigger>
                           <MultiSelectContent>

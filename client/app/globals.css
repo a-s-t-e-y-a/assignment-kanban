@@ -120,3 +120,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Fix for MultiSelect wrapping in dialogs */
+@layer components {
+  [role="combobox"] {
+    white-space: normal !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  [role="combobox"] > div {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
