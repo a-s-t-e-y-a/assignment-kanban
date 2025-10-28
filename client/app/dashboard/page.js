@@ -165,33 +165,38 @@ export default function DashboardPage() {
                   />
                   <FormItem>
                     <FormLabel>Add Members</FormLabel>
-                    <div className="flex gap-2 items-start">
-                      <div className="flex-1 min-w-0">
-                        <MultiSelect values={selectedMembers} onValuesChange={setSelectedMembers}>
-                          <MultiSelectTrigger>
-                            <MultiSelectValue placeholder="Select members..." />
-                          </MultiSelectTrigger>
-                          <MultiSelectContent>
-                            <MultiSelectGroup>
-                              {emails.map((email) => (
-                                <MultiSelectItem key={email} value={email}>
-                                  {email}
-                                </MultiSelectItem>
-                              ))}
-                            </MultiSelectGroup>
-                          </MultiSelectContent>
-                        </MultiSelect>
+                    <div className="space-y-2">
+                      <div className="flex gap-2 items-start">
+                        <div className="flex-1 min-w-0">
+                          <MultiSelect values={selectedMembers} onValuesChange={setSelectedMembers}>
+                            <MultiSelectTrigger>
+                              <MultiSelectValue placeholder="Select members..." />
+                            </MultiSelectTrigger>
+                            <MultiSelectContent>
+                              <MultiSelectGroup>
+                                {emails.map((email) => (
+                                  <MultiSelectItem key={email} value={email}>
+                                    {email}
+                                  </MultiSelectItem>
+                                ))}
+                              </MultiSelectGroup>
+                            </MultiSelectContent>
+                          </MultiSelect>
+                        </div>
+                        <Button 
+                          type="button" 
+                          variant="destructive" 
+                          size="icon"
+                          className="shrink-0"
+                          onClick={() => setIsCreateUserDialogOpen(true)}
+                          title="Create a new user account"
+                        >
+                          <UserPlus className="h-4 w-4" />
+                        </Button>
                       </div>
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="icon"
-                        className="shrink-0"
-                        onClick={() => setIsCreateUserDialogOpen(true)}
-                        title="Add new user to the project"
-                      >
-                        <UserPlus className="h-4 w-4" />
-                      </Button>
+                      <p className="text-xs text-muted-foreground">
+                        Select existing members from the list. To add a new member, click the <span className="text-destructive font-medium">red button</span> to create a new user account first.
+                      </p>
                     </div>
                   </FormItem>
                   <div className="flex justify-end gap-2">
