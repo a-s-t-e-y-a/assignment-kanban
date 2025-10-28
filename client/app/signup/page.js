@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { Button } from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../components/ui/form'
@@ -28,7 +28,6 @@ export default function SignupPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
-      <Toaster />
       <div className="w-full max-w-md">
 
         <div className="text-center mb-8">

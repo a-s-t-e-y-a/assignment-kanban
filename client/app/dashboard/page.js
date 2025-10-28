@@ -5,7 +5,7 @@ import { Pencil, Trash2, Eye, UserPlus } from 'lucide-react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { Button } from '../../components/ui/button'
 import { Spinner } from '../../components/ui/spinner'
 import {
@@ -119,7 +119,6 @@ export default function DashboardPage() {
 
   return (
     <div className="p-6 relative">
-      <Toaster />      
       <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-medium">Projects</h1>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

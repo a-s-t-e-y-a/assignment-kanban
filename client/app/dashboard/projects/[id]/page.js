@@ -5,7 +5,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { Plus, Trash2, Pencil, Calendar } from 'lucide-react'
 import { getProjectByIdQuery } from '../../../../lib/utils/projects/queries'
 import { getTasksByProjectQuery } from '../../../../lib/utils/tasks/queries'
@@ -233,8 +233,6 @@ export default function ProjectPage({ params }) {
 
   return (
     <div className="h-auto md:h-[calc(100vh-4rem)] overflow-y-auto md:overflow-hidden relative">
-      <Toaster />
-      
       {/* Loading Overlay */}
       {(isDragging || updateMutation.isPending || createMutation.isPending || deleteMutation.isPending) && (
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
