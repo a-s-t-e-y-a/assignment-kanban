@@ -309,11 +309,6 @@ pnpm clean
 
 **GitHub**: [@a-s-t-e-y-a](https://github.com/a-s-t-e-y-a)
 
----
-
-## Support
-
-For issues or questions, please open an issue on the GitHub repository.
 
 ---
 
