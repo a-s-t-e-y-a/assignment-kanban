@@ -4,6 +4,8 @@ import { checkProjectMember } from '../utils/authorization.js';
 import User from '../schema/auth.js';
 import Project from '../schema/project.js';
 import { formatError } from '../utils/errorUtils.js';
+import socketManager from '../websocket/socket.js';
+import { TASK_CREATED, TASK_UPDATED, TASK_DELETED } from '../websocket/socketEvents.js';
 
 const create = async (req, res) => {
   try {
@@ -19,6 +21,7 @@ const create = async (req, res) => {
       return res.status(400).json({ message: 'Assigned user is not a project member' });
     }
     const task = await createTask(title, description || '', assignedUser._id, dueDate ? new Date(dueDate) : null, projectId);
+    socketManager.getIO().to(projectId).emit(TASK_CREATED, task);
     res.status(201).json(task);
   } catch (error) {
     const statusCode = error.statusCode || 400;
@@ -59,6 +62,7 @@ const update = async (req, res) => {
       updateData.assignedTo = assignedUserId;
     }
     const updatedTask = await updateTask(taskId, updateData);
+    socketManager.getIO().to(task.project._id.toString()).emit(TASK_UPDATED, updatedTask);
     res.json(updatedTask);
   } catch (error) {
     const statusCode = error.statusCode || 400;
@@ -75,6 +79,7 @@ const remove = async (req, res) => {
     }
     await checkProjectMember(task.project._id, req.user._id);
     await deleteTask(taskId);
+    socketManager.getIO().to(task.project._id.toString()).emit(TASK_DELETED, { id: taskId });
     res.json({ message: 'Task deleted' });
   } catch (error) {
     const statusCode = error.statusCode || 400;

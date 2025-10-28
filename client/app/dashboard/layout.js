@@ -7,6 +7,7 @@ import { Button } from '../../components/ui/button'
 import { ThemeToggle } from '../../components/theme-toggle'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../components/ui/dialog'
 import { getUserQuery } from '../../lib/utils/mutations'
+import socketClient from '../../lib/socket'
 
 export default function DashboardLayout({ children }) {
   const router = useRouter()
@@ -22,6 +23,7 @@ export default function DashboardLayout({ children }) {
   }, [isLoading, isError, user, router])
 
   const handleLogout = () => {
+    socketClient.disconnectSocket()
     document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT'
     localStorage.removeItem('token')
     setIsLogoutDialogOpen(false)

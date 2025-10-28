@@ -10,6 +10,7 @@ import { Plus, Trash2, Pencil, Calendar } from 'lucide-react'
 import { getProjectByIdQuery } from '../../../../lib/utils/projects/queries'
 import { getTasksByProjectQuery } from '../../../../lib/utils/tasks/queries'
 import { createTaskMutation, updateTaskMutation, deleteTaskMutation } from '../../../../lib/utils/tasks/mutations'
+import { useTaskSocket } from '../../../../hooks/useTaskSocket'
 import { Button } from '../../../../components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../../../components/ui/dialog'
 import { Input } from '../../../../components/ui/input'
@@ -46,6 +47,9 @@ export default function ProjectPage({ params }) {
   const createMutation = useMutation(createTaskMutation(queryClient))
   const updateMutation = useMutation(updateTaskMutation(queryClient))
   const deleteMutation = useMutation(deleteTaskMutation(queryClient))
+
+  useTaskSocket(id, queryClient)
+
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingTask, setEditingTask] = useState(null)
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)

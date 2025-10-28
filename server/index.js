@@ -5,6 +5,7 @@ import winston from 'winston';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import routes from './routes.js';
+import socketManager from './src/websocket/socket.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,6 +43,8 @@ mongoose.connect(process.env.DATABASE_URL, {
 
 app.use('/', routes);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
 });
+
+socketManager.initSocket(server);
