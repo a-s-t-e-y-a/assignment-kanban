@@ -56,7 +56,6 @@ A full-stack, real-time collaborative project management application built with 
 ### Frontend
 - **Framework**: Next.js 14 (App Router)
 - **Language**: JavaScript/React
-- **State Management**: TanStack Query (React Query)
 - **Styling**: Tailwind CSS
 - **UI Components**: Custom components with shadcn/ui
 - **Form Handling**: React Hook Form
