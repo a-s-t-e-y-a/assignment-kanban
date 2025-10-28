@@ -1,0 +1,32 @@
+{
+  "name": "assignment-kanban",
+  "version": "1.0.0",
+  "description": "Full-stack Kanban project management application",
+  "scripts": {
+    "install:all": "pnpm install && cd client && pnpm install && cd ../server && pnpm install",
+    "install:client": "cd client && pnpm install",
+    "install:server": "cd server && pnpm install",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "cd client && pnpm dev",
+    "dev:server": "cd server && pnpm dev",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "start:client": "cd client && pnpm start",
+    "start:server": "cd server && pnpm start",
+    "build": "cd client && pnpm build",
+    "clean": "rm -rf node_modules client/node_modules server/node_modules client/.next",
+    "setup": "pnpm install && pnpm install:all"
+  },
+  "keywords": [
+    "kanban",
+    "project-management",
+    "react",
+    "nextjs",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
