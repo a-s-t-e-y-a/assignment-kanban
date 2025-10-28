@@ -183,7 +183,7 @@ export default function DashboardPage() {
                             </MultiSelectContent>
                           </MultiSelect>
                         </div>
-                        <Button 
+                        {/* <Button 
                           type="button" 
                           variant="destructive" 
                           size="icon"
@@ -192,19 +192,34 @@ export default function DashboardPage() {
                           title="Create a new user account"
                         >
                           <UserPlus className="h-4 w-4" />
-                        </Button>
+                        </Button> */}
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        Select existing members from the list. To add a new member, click the <span className="text-destructive font-medium">red button</span> to create a new user account first.
+                        Select existing members from the list. To add a new member, create a new user account first.
                       </p>
                     </div>
                   </FormItem>
                   <div className="flex justify-end gap-2">
-                    <Button type="button" variant="outline" onClick={handleCloseDialog}>
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={handleCloseDialog}
+                      disabled={createMutation.isPending || updateMutation.isPending}
+                    >
                       Cancel
                     </Button>
-                    <Button type="submit">
-                      {editingProject ? 'Update Project' : 'Create Project'}
+                    <Button 
+                      type="submit"
+                      disabled={createMutation.isPending || updateMutation.isPending}
+                    >
+                      {createMutation.isPending || updateMutation.isPending ? (
+                        <>
+                          <Spinner className="mr-2 h-4 w-4" />
+                          {editingProject ? 'Updating...' : 'Creating...'}
+                        </>
+                      ) : (
+                        editingProject ? 'Update Project' : 'Create Project'
+                      )}
                     </Button>
                   </div>
                 </form>

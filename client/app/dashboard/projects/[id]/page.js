@@ -460,11 +460,26 @@ export default function ProjectPage({ params }) {
                 />
               )}
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={handleCloseDialog}>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={handleCloseDialog}
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                >
                   Cancel
                 </Button>
-                <Button type="submit">
-                  {editingTask ? 'Update Task' : 'Create Task'}
+                <Button 
+                  type="submit"
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                >
+                  {createMutation.isPending || updateMutation.isPending ? (
+                    <>
+                      <Spinner className="mr-2 h-4 w-4" />
+                      {editingTask ? 'Updating...' : 'Creating...'}
+                    </>
+                  ) : (
+                    editingTask ? 'Update Task' : 'Create Task'
+                  )}
                 </Button>
               </DialogFooter>
             </form>
@@ -481,11 +496,26 @@ export default function ProjectPage({ params }) {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={handleCancelDelete}>
+            <Button 
+              variant="outline" 
+              onClick={handleCancelDelete}
+              disabled={deleteMutation.isPending}
+            >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleConfirmDelete}>
-              Delete
+            <Button 
+              variant="destructive" 
+              onClick={handleConfirmDelete}
+              disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? (
+                <>
+                  <Spinner className="mr-2 h-4 w-4" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete'
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>
