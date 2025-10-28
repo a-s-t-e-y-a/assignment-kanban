@@ -15,15 +15,12 @@ A full-stack, real-time collaborative project management application built with 
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
 - [Setup & Installation](#setup--installation)
 - [Running the Application](#running-the-application)
 - [Environment Variables](#environment-variables)
-- [API Documentation](#api-documentation)
 - [Current Limitations & Assumptions](#current-limitations--assumptions)
 - [Performance Considerations](#performance-considerations)
 - [Future Scope](#future-scope)
-- [Contributing](#contributing)
 
 ---
 
