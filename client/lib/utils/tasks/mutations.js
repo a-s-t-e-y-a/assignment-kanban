@@ -9,6 +9,8 @@ export const createTaskMutation = (queryClient) => ({
   onSuccess: (data, variables) => {
     queryClient.invalidateQueries({ queryKey: ['tasks', variables.projectId] })
     queryClient.invalidateQueries({ queryKey: ['project', variables.projectId] })
+    queryClient.refetchQueries({ queryKey: ['tasks', variables.projectId] })
+    queryClient.refetchQueries({ queryKey: ['project', variables.projectId] })
     toast.success('Task created successfully')
   },
   onError: (error) => {
@@ -26,10 +28,16 @@ export const updateTaskMutation = (queryClient) => ({
   onSuccess: (data, variables) => {
     queryClient.invalidateQueries({ queryKey: ['tasks'] })
     queryClient.invalidateQueries({ queryKey: ['project'] })
+    queryClient.refetchQueries({ queryKey: ['tasks'] })
+    queryClient.refetchQueries({ queryKey: ['project'] })
   },
   onError: (error) => {
-    const errorMessage = error?.response?.data?.error || error?.response?.data?.message || 'Failed to update task'
-    toast.error(errorMessage)
+    if (error?.response?.status === 409) {
+      toast.error('This task was modified by another user. Please refresh and try again.')
+    } else {
+      const errorMessage = error?.response?.data?.error || error?.response?.data?.message || 'Failed to update task'
+      toast.error(errorMessage)
+    }
   }
 })
 
@@ -37,10 +45,13 @@ export const deleteTaskMutation = (queryClient) => ({
   mutationFn: async (id) => {
     const taskId = typeof id === 'object' ? (id._id || id.id) : id
     await api.delete(`/api/tasks/${taskId}`)
+    return taskId
   },
-  onSuccess: () => {
+  onSuccess: (taskId) => {
     queryClient.invalidateQueries({ queryKey: ['tasks'] })
     queryClient.invalidateQueries({ queryKey: ['project'] })
+    queryClient.refetchQueries({ queryKey: ['tasks'] })
+    queryClient.refetchQueries({ queryKey: ['project'] })
     toast.success('Task deleted successfully')
   },
   onError: (error) => {

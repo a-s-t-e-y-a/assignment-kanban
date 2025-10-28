@@ -11,6 +11,10 @@ export const getLoginMutation = (router) => ({
     router.push('/dashboard')
   },
   onError: (error) => {
+    if (!error.response) {
+      toast.error('Network error: Unable to connect to server')
+      return
+    }
     const errorMessage = error?.response?.data?.message || error?.response?.data?.error || 'Login failed'
     toast.error(errorMessage)
   }
@@ -18,11 +22,18 @@ export const getLoginMutation = (router) => ({
 
 export const getSignupMutation = (router) => ({
   mutationFn: (data) => api.post('/auth/signup', data),
-  onSuccess: () => {
+  onSuccess: (response, variables, context) => {
     toast.success('Account created successfully!')
+    if (context?.queryClient) {
+      context.queryClient.invalidateQueries({ queryKey: ['emails'] })
+    }
     router.push('/')
   },
   onError: (error) => {
+    if (!error.response) {
+      toast.error('Network error: Unable to connect to server')
+      return
+    }
     const errorMessage = error?.response?.data?.message || error?.response?.data?.error || 'Signup failed'
     toast.error(errorMessage)
   }

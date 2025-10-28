@@ -9,5 +9,11 @@ export const getTasksByProjectQuery = (projectId) => ({
       id: task._id,
       status: task.status.toLowerCase().replace(' ', '')
     }))
+  },
+  retry: (failureCount, error) => {
+    if (error?.response?.status === 403 || error?.response?.status === 401) {
+      return false;
+    }
+    return failureCount < 3;
   }
 })

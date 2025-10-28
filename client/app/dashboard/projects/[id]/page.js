@@ -42,8 +42,11 @@ export default function ProjectPage({ params }) {
   const router = useRouter()
   const queryClient = useQueryClient()
   const { id } = use(params)
-  const { data: project, isLoading: projectLoading, isError } = useQuery(getProjectByIdQuery(id))
-  const { data: tasks = [], isLoading: tasksLoading } = useQuery(getTasksByProjectQuery(id))
+  const { data: project, isLoading: projectLoading, isError, error } = useQuery(getProjectByIdQuery(id))
+  const { data: tasks = [], isLoading: tasksLoading } = useQuery({
+    ...getTasksByProjectQuery(id),
+    enabled: !!project && !isError
+  })
   const createMutation = useMutation(createTaskMutation(queryClient))
   const updateMutation = useMutation(updateTaskMutation(queryClient))
   const deleteMutation = useMutation(deleteTaskMutation(queryClient))
@@ -188,6 +191,27 @@ export default function ProjectPage({ params }) {
     setDeleteConfirmOpen(false)
   }
 
+  if (isError) {
+    const isUnauthorized = error?.response?.status === 403 || error?.response?.status === 401;
+    const errorMessage = isUnauthorized 
+      ? 'You are not authorized to view this project' 
+      : error?.response?.data?.error || 'Project not found';
+    
+    return (
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] gap-4">
+        <p className="text-xl font-semibold text-red-500">{errorMessage}</p>
+        <p className="text-sm text-muted-foreground">
+          {isUnauthorized 
+            ? 'You need to be a member of this project to view it.' 
+            : 'The project you are looking for does not exist or has been deleted.'}
+        </p>
+        <Button onClick={() => router.push('/dashboard')}>
+          Back to Dashboard
+        </Button>
+      </div>
+    )
+  }
+
   if (projectLoading || tasksLoading) {
     return (
       <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
@@ -196,10 +220,13 @@ export default function ProjectPage({ params }) {
     )
   }
 
-  if (isError || !project) {
+  if (!project) {
     return (
-      <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
-        <p>Project not found</p>
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] gap-4">
+        <p className="text-lg font-medium">Project not found</p>
+        <Button onClick={() => router.push('/dashboard')}>
+          Back to Dashboard
+        </Button>
       </div>
     )
   }
@@ -399,6 +426,7 @@ export default function ProjectPage({ params }) {
               <FormField
                 control={form.control}
                 name="assignedTo"
+                rules={{ required: 'Assigned user is required' }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Assigned To</FormLabel>

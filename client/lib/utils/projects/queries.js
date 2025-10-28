@@ -16,6 +16,12 @@ export const getProjectByIdQuery = (id) => ({
     return response.data
   },
   enabled: !!id,
+  retry: (failureCount, error) => {
+    if (error?.response?.status === 403 || error?.response?.status === 401) {
+      return false;
+    }
+    return failureCount < 3;
+  }
 })
 
 export const getEmailsQuery = () => ({
@@ -24,5 +30,5 @@ export const getEmailsQuery = () => ({
     const response = await api.get('/auth/emails')
     return response.data.emails
   },
-  staleTime: 5 * 60 * 1000, // 5 minutes
+  staleTime: 0,
 })

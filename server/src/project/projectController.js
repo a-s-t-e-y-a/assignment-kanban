@@ -1,6 +1,6 @@
 import { createProject, getProjectsByUser, getProjectById, updateProject, deleteProject, addMember as addMemberToProject } from './projectService.js';
 import { validateCreateProject, validateUpdateProject, validateAddMember } from './projectDto.js';
-import { checkOwner } from '../utils/authorization.js';
+import { checkOwner, checkProjectMember } from '../utils/authorization.js';
 import { formatError } from '../utils/errorUtils.js';
 
 const create = async (req, res) => {
@@ -51,6 +51,9 @@ const getById = async (req, res) => {
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
     }
+    
+    await checkProjectMember(req.params.id, req.user._id);
+    
     const projectObj = project.toObject();
     if (projectObj.owner && projectObj.owner._id) {
       const { _id, ...ownerWithoutId } = projectObj.owner;
@@ -72,7 +75,8 @@ const getById = async (req, res) => {
     };
     res.json(projectWithDetails);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    const statusCode = error.statusCode || 400;
+    res.status(statusCode).json({ error: error.message });
   }
 };
 

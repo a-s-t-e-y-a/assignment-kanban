@@ -41,12 +41,26 @@ export default function LoginPage() {
             <FormField
             control={form.control}
             name="email"
-            rules={{ required: 'Email is required' }}
+            rules={{ 
+              required: 'Email is required',
+              pattern: {
+                value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+                message: 'Email must be lowercase and valid'
+              }
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="Email" {...field} />
+                  <Input 
+                    type="email" 
+                    placeholder="Email" 
+                    {...field}
+                    onChange={(e) => {
+                      const lowerCaseValue = e.target.value.toLowerCase();
+                      field.onChange(lowerCaseValue);
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

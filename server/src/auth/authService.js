@@ -17,12 +17,14 @@ const generateToken = (userId) => {
 
 const createUser = async (name, email, password) => {
   const hashedPassword = await hashPassword(password);
-  const user = new User({ name, email, password: hashedPassword });
+  const normalizedEmail = email.toLowerCase();
+  const user = new User({ name, email: normalizedEmail, password: hashedPassword });
   return await user.save();
 };
 
 const findUserByEmail = async (email) => {
-  return await User.findOne({ email });
+  const normalizedEmail = email.toLowerCase();
+  return await User.findOne({ email: normalizedEmail });
 };
 
 const authenticateUser = async (email, password) => {
