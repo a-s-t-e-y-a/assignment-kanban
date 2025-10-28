@@ -201,7 +201,7 @@ export default function ProjectPage({ params }) {
   }
 
   return (
-    <div className="h-[calc(100vh-4rem)] overflow-hidden relative">
+    <div className="h-auto md:h-[calc(100vh-4rem)] overflow-y-auto md:overflow-hidden relative">
       <Toaster />
       
       {/* Loading Overlay */}
@@ -216,28 +216,29 @@ export default function ProjectPage({ params }) {
         </div>
       )}
       
-      <div className="p-6 border-b">
-        <div className="flex items-center justify-between">
+      <div className="p-4 md:p-6 border-b">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <Button 
             onClick={() => router.push('/dashboard')} 
             variant="outline"
+            className="w-full md:w-auto"
           >
             Back to Dashboard
           </Button>
-          <div className="text-center">
-            <h1 className="text-xl font-medium mb-1">{project.title}</h1>
-            <p className="text-muted-foreground text-sm mb-2">{project.description}</p>
-            <div className="flex justify-center gap-4 mb-2">
+          <div className="text-center w-full md:w-auto">
+            <h1 className="text-lg md:text-xl font-medium mb-1">{project.title}</h1>
+            <p className="text-muted-foreground text-xs md:text-sm mb-2">{project.description}</p>
+            <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-2">
               <Badge variant="secondary">{project.membersCount} members</Badge>
               <Badge variant="outline">{project.completionRate}% complete</Badge>
             </div>
-            <div className="flex justify-center items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex flex-wrap justify-center items-center gap-2 text-xs text-muted-foreground">
               <span>Owner:</span>
               <span className="font-medium">{project.owner?.name}</span>
-              <span>({project.owner?.email})</span>
+              <span className="hidden sm:inline">({project.owner?.email})</span>
             </div>
           </div>
-          <Button onClick={() => handleOpenDialog()}>
+          <Button onClick={() => handleOpenDialog()} className="w-full md:w-auto">
             <Plus className="mr-2 h-4 w-4" />
             Add Task
           </Button>
@@ -245,12 +246,12 @@ export default function ProjectPage({ params }) {
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-3 gap-4 p-6 h-[calc(100vh-12rem)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 md:p-6 h-auto md:h-[calc(100vh-12rem)] overflow-y-auto md:overflow-hidden">
           {Object.entries(COLUMN_CONFIGS).map(([status, config]) => (
             <Droppable key={status} droppableId={status}>
               {(provided, snapshot) => (
                 <div
-                  className={`flex flex-col rounded-lg border-2 ${config.borderColor} ${config.bgColor} p-4 ${
+                  className={`flex flex-col rounded-lg border-2 ${config.borderColor} ${config.bgColor} p-4 min-h-[300px] md:min-h-0 ${
                     snapshot.isDraggingOver ? 'ring-2 ring-offset-2 ring-blue-400' : ''
                   }`}
                 >
