@@ -13,9 +13,11 @@ class SocketManager {
   }
 
   initSocket(server) {
+    const devUrl = (process.env.CLIENT_DEV_URL || 'http://localhost:3000').replace(/\/$/, '');
+    const prodUrl = (process.env.CLIENT_PROD_URL || 'http://localhost:3000').replace(/\/$/, '');
     this.io = new Server(server, {
       cors: {
-        origin: process.env.DEV === 'true' ? process.env.CLIENT_DEV_URL || 'http://localhost:3000' : process.env.CLIENT_PROD_URL || 'http://localhost:3000',
+        origin: process.env.DEV === 'true' ? devUrl : prodUrl,
         methods: ['GET', 'POST']
       }
     });
