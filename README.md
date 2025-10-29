@@ -2,7 +2,7 @@
 
 A full-stack, real-time collaborative project management application built with Next.js, Node.js, MongoDB, and Socket.IO.
 
-> **DISCLAIMER**: This project was created as an assignment/demonstration project for educational purposes only. It is not intended for commercial use or as a profitable product. Use at your own risk in production environments.
+> **DISCLAIMER**: This project was created as an assignment/demonstration project. It is not intended for commercial use or as a profitable product. Use at your own risk in production environments.
 
 ## Live Deployment
 
@@ -173,28 +173,6 @@ pnpm clean
 
 ---
 
-## Environment Variables
-
-### Client Environment Variables
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_DEV_BACKEND_URL` | Backend URL for development | `http://localhost:5000` |
-| `NEXT_PUBLIC_PROD_BACKEND_URL` | Backend URL for production | `https://your-backend.railway.app/` |
-| `NEXT_PUBLIC_DEV` | Enable development mode | `true` or `false` |
-
-### Server Environment Variables
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DATABASE_URL` | MongoDB connection string | `mongodb+srv://...` |
-| `PORT` | Server port | `5000` |
-| `JWT_SECRET` | Secret key for JWT tokens | `your_secret_key` |
-| `CLIENT_DEV_URL` | Frontend URL for development CORS | `http://localhost:3000` |
-| `CLIENT_PROD_URL` | Frontend URL for production CORS | `https://your-app.vercel.app/` |
-| `DEV` | Enable development mode | `true` or `false` |
-
----
-
-
 ## Current Limitations & Assumptions
 
 ### 1. Member Invitation System
@@ -255,12 +233,6 @@ pnpm clean
 - No indexing strategy documented
 - Could be optimized for large datasets
 
-### Optimization Strategies Used
-
-- **React Compiler**: Automatic render optimization in Next.js 14
-- **TanStack Query**: Client-side caching and request deduplication
-- **WebSocket**: Real-time updates without polling
-- **JWT Tokens**: Stateless authentication (no session storage)
 
 ### Solutions with Redis
 
@@ -311,6 +283,6 @@ pnpm clean
 
 ---
 
-**Note**: This is an assignment/demonstration project created for educational purposes. While it demonstrates various full-stack development concepts and can serve as a learning resource, it should not be used as-is for commercial or profitable ventures without significant enhancements, security audits, and proper testing.
+**Note**: This is an assignment/demonstration project. It should not be used as-is for commercial or profitable ventures without significant enhancements, security audits, and proper testing.
 
 
