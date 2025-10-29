@@ -15,6 +15,11 @@ class SocketClient {
       return;
     }
 
+    if (this.socket && !this.socket.connected) {
+      this.socket.disconnect();
+      this.socket = null;
+    }
+
     const serverUrl = process.env.NEXT_PUBLIC_DEV === 'true' ? process.env.NEXT_PUBLIC_DEV_BACKEND_URL || 'http://localhost:5000' : process.env.NEXT_PUBLIC_PROD_BACKEND_URL || 'http://localhost:5000'
     
     this.socket = io(serverUrl, {

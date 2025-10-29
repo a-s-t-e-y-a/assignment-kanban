@@ -92,7 +92,10 @@ const getByProject = async (req, res) => {
     const projectId = req.params.projectId;
     await checkProjectMember(projectId, req.user._id);
     const tasks = await getTasksByProject(projectId);
-    res.json(tasks);
+    res.json({
+      tasks,
+      hasNoTasks: tasks.length === 0
+    });
   } catch (error) {
     const statusCode = error.statusCode || 400;
     res.status(statusCode).json({ error: error.message });

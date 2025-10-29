@@ -1,5 +1,6 @@
 import api from '../api'
 import toast from 'react-hot-toast'
+import socketClient from '../socket'
 
 export const getLoginMutation = (router) => ({
   mutationFn: (data) => api.post('/auth/login', data),
@@ -8,6 +9,7 @@ export const getLoginMutation = (router) => ({
     const token = response.data.token
     document.cookie = `token=${token}; path=/`
     localStorage.setItem('token', token)
+    socketClient.initSocket(token)
     router.push('/dashboard')
   },
   onError: (error) => {

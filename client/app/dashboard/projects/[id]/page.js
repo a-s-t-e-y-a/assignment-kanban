@@ -43,10 +43,11 @@ export default function ProjectPage({ params }) {
   const queryClient = useQueryClient()
   const { id } = use(params)
   const { data: project, isLoading: projectLoading, isError, error } = useQuery(getProjectByIdQuery(id))
-  const { data: tasks = [], isLoading: tasksLoading } = useQuery({
+  const { data: tasksData = { tasks: [], hasNoTasks: false }, isLoading: tasksLoading } = useQuery({
     ...getTasksByProjectQuery(id),
     enabled: !!project && !isError
   })
+  const tasks = tasksData.tasks || []
   const createMutation = useMutation(createTaskMutation(queryClient))
   const updateMutation = useMutation(updateTaskMutation(queryClient))
   const deleteMutation = useMutation(deleteTaskMutation(queryClient))
