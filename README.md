@@ -7,7 +7,7 @@ A full-stack, real-time collaborative project management application built with 
 ## Live Deployment
 
 - **Frontend**: [https://assignment-kanban-eosin.vercel.app/](https://assignment-kanban-eosin.vercel.app/)
-- **Backend API**: [https://assignment-kanban-production.up.railway.app/](https://assignment-kanban-production.up.railway.app/)
+- **Backend API**: [https://assignment-kanban.onrender.com/](https://assignment-kanban.onrender.com/)
 
 ### Test Accounts
 
