@@ -100,7 +100,17 @@ cd assignment-kanban
 ```
 
 ### Step 2: Install Dependencies
-Using the root package.json (installs both client & server):
+First, install root dependencies (including concurrently):
+```bash
+pnpm install
+```
+
+Then install client & server dependencies:
+```bash
+pnpm install:all
+```
+
+Or run the complete setup command:
 ```bash
 pnpm setup
 ```
