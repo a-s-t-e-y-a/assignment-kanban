@@ -41,9 +41,9 @@ const update = async (req, res) => {
       return res.status(404).json({ message: 'Project not found' });
     }
     if (project.owner.toString() !== req.user._id.toString() && task.assignedTo._id.toString() !== req.user._id.toString()) {
-      const error = new Error('Not authorized');
-      error.statusCode = 403;
-      throw error;
+      return res.status(403).json({ 
+        error: 'You are not authorized to edit this task. Only the project owner or the assigned user can edit task details or status.' 
+      });
     }
     const validatedData = validateUpdateTask(req.body);
     let assignedUserId = task.assignedTo._id; 
@@ -77,7 +77,15 @@ const remove = async (req, res) => {
     if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    await checkProjectMember(task.project._id, req.user._id);
+    const project = await Project.findById(task.project._id);
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    if (project.owner.toString() !== req.user._id.toString() && task.assignedTo._id.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ 
+        error: 'You are not authorized to delete this task. Only the project owner or the assigned user can delete this task.' 
+      });
+    }
     await deleteTask(taskId);
     socketManager.getIO().to(task.project._id.toString()).emit(TASK_DELETED, { id: taskId });
     res.json({ message: 'Task deleted' });
