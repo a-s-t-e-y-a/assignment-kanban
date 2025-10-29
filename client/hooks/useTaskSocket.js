@@ -24,27 +24,27 @@ export const useTaskSocket = (projectId, queryClient) => {
         socket.once('connect', joinProject)
       }
 
-      const handleTaskCreated = (task) => {
-        queryClient.invalidateQueries(['tasks', projectId])
-        queryClient.refetchQueries(['tasks', projectId])
+      const handleTaskCreated = async (task) => {
+        await queryClient.invalidateQueries(['tasks', projectId])
+        await queryClient.refetchQueries(['tasks', projectId], { type: 'active' })
         toast('New task created by the user', {
           icon: '✨',
           duration: 2000,
         })
       }
 
-      const handleTaskUpdated = (task) => {
-        queryClient.invalidateQueries(['tasks', projectId])
-        queryClient.refetchQueries(['tasks', projectId])
+      const handleTaskUpdated = async (task) => {
+        await queryClient.invalidateQueries(['tasks', projectId])
+        await queryClient.refetchQueries(['tasks', projectId], { type: 'active' })
         toast('Task updated by the user', {
           icon: '🔄',
           duration: 2000,
         })
       }
 
-      const handleTaskDeleted = (task) => {
-        queryClient.invalidateQueries(['tasks', projectId])
-        queryClient.refetchQueries(['tasks', projectId])
+      const handleTaskDeleted = async (task) => {
+        await queryClient.invalidateQueries(['tasks', projectId])
+        await queryClient.refetchQueries(['tasks', projectId], { type: 'active' })
         toast('Task deleted by the user', {
           icon: '🗑️',
           duration: 2000,
