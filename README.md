@@ -9,6 +9,18 @@ A full-stack, real-time collaborative project management application built with 
 - **Frontend**: [https://assignment-kanban-eosin.vercel.app/](https://assignment-kanban-eosin.vercel.app/)
 - **Backend API**: [https://assignment-kanban-production.up.railway.app/](https://assignment-kanban-production.up.railway.app/)
 
+### Test Accounts
+
+For testing purposes, you can use any of these pre-created accounts:
+
+| Name | Email | Password |
+|------|-------|----------|
+| Rahul Sharma | rahul.sharma@example.com | Test123 |
+| Priya Patel | priya.patel@example.com | Test123 |
+| Amit Kumar | amit.kumar@example.com | Test123 |
+| Sneha Reddy | sneha.reddy@example.com | Test123 |
+| Arjun Singh | arjun.singh@example.com | Test123 |
+
 ---
 
 ## Table of Contents
